@@ -17,7 +17,7 @@ data "aws_ami" "amazon_linux" {
 # instance creation block for public and private subnet
 resource "aws_instance" "instances_in_subnets" {
     count = length(aws_subnet.public_subnets.*.id)+length(aws_subnet.private_subnets.*.id)
-    ami = aws_ami.amazon_linux.id
+    ami = data.aws_ami.amazon_linux.id
     instance_type = "t2.micro"
     key_name = "MyFirstkeypair.pem"
     vpc_security_group_ids = [aws_security_group.my_security_group.id]
