@@ -24,7 +24,7 @@ phases:
       - terraform init # to initialize terraform
       - terraform validate # to check code correctness
       - terraform plan # give plan of infracreation
-      - terraform $TF_COMMAND -auto-approve # TF_COMMAND = used environment variable to get command from user
+      - terraform destroy -auto-approve # TF_COMMAND = used environment variable to get command from user
 
   post_build:
     on-failure: CONTINUE
