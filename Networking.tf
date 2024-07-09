@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "mygateway" {
 
 
 resource "aws_default_route_table" "terraform_default_rt"{
-    default_route_table_id = aws_default_route_table.terraform_default_rt.id
+    default_route_table_id = aws_vpc.main_vpc.default_route_table_id
 
     tags = {
         Name = "default_rout_table"
