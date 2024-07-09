@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+   variables:
+     TF_COMMAND: "$1"
+     #TF_COMMAND = "apply"
+     #TF_COMMAND = "destroy"
+phases: 
+   install: 
+     on-failure: ABORT
+     commands:
+       # installing terraform
+       - sudo yum install -y yum-utils shadow-utils
+       - sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+       - sudo yum -y install terraform 
+       - echo "installed terraform"
+
+   pre_build: 
+     on-failure: ABORT
+     commands:
+       - echo build started on `date`
+
+   build: 
+     on-failure: ABORT
+     commands: 
+       - echo entered in build phase
+       - terraform --version
+       - terraform init # to initialize terraform
+       - terraform validate # to check code correctness
+       - terraform plan # give plan of infracreation
+       - terraform $TF_COMMAND -auto-approve # TF_COMMAND = used environment variable to get command from user
+
+    post_build:
+      on_failure: CONTINUE
+      commands: echo build executed on `date`
